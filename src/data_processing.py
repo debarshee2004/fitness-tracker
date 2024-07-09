@@ -205,3 +205,23 @@ data_resampling["set"] = data_resampling["set"].astype("int")
 # Export the processed dataset
 export_folder_path = "../data/processed/01_data_processed.pkl"
 data_resampling.to_pickle(export_folder_path)
+
+# A function for the full data_processing process.
+
+files = glob("../data/raw/MetaMotion/*.csv")
+data_file = "../data/raw/MetaMotion/"
+
+
+def data_processing(files):
+
+    acc_df, gyr_df = reading_data_from_files(files)
+
+    data_merged = pd.concat([acc_df.iloc[:, :3], gyr_df], axis=1)
+    days = [g for n, g in data_merged.groupby(pd.Grouper(freq="D"))]
+    data_resampling = pd.concat(
+        [df.resample(rule="200ms").apply(sampling).dropna() for df in days]
+    )
+    data_resampling["set"] = data_resampling["set"].astype("int")
+
+    export_folder_path = "../data/processed/01_data_processed.pkl"
+    data_resampling.to_pickle(export_folder_path)
