@@ -102,7 +102,7 @@ files = glob("../../data/raw/MetaMotion/*.csv")
 data_file = "../../data/raw/MetaMotion/"
 
 
-def test_reading_data_from_files(files):
+def reading_data_from_files(files):
     """
     Reads accelerometer and gyroscope data from a list of CSV files and processes them into two separate DataFrames.
 
@@ -173,7 +173,7 @@ def test_reading_data_from_files(files):
     return acc_df, gyr_df
 
 
-acc_df, gyr_df = test_reading_data_from_files(files)
+acc_df, gyr_df = reading_data_from_files(files)
 
 # Merging datasets
 
@@ -239,7 +239,7 @@ files = glob("../../data/raw/MetaMotion/*.csv")
 data_file = "../../data/raw/MetaMotion/"
 
 
-def test_data_processing(files):
+def data_processing(files):
     """
     Processes accelerometer and gyroscope data from a list of CSV files, merges them,
     resamples the merged data, and exports the processed data to a pickle file.
@@ -271,7 +271,7 @@ def test_data_processing(files):
     The exported DataFrame is saved to the path: "../data/processed/01_data_processed.pkl"
     """
 
-    acc_df, gyr_df = test_reading_data_from_files(files)
+    acc_df, gyr_df = reading_data_from_files(files)
 
     data_merged = pd.concat([acc_df.iloc[:, :3], gyr_df], axis=1)
     data_merged.columns = [
@@ -287,6 +287,19 @@ def test_data_processing(files):
         "set",
     ]
 
+    sampling = {
+        "acc_x": "mean",
+        "acc_y": "mean",
+        "acc_z": "mean",
+        "gyr_x": "mean",
+        "gyr_y": "mean",
+        "gyr_z": "mean",
+        "participant": "last",
+        "label": "last",
+        "category": "last",
+        "set": "last",
+    }
+
     days = [g for n, g in data_merged.groupby(pd.Grouper(freq="D"))]
     data_resampling = pd.concat(
         [df.resample(rule="200ms").apply(sampling).dropna() for df in days]
@@ -298,4 +311,4 @@ def test_data_processing(files):
 
 
 # Testing the function (This function takes in file path and creates a processed data set).
-# test_data_processing(files)
+# data_processing(files)
