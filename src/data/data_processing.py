@@ -2,19 +2,19 @@ import pandas as pd
 from glob import glob
 
 # Read single CSV files for accelerometer and gyroscope data
-single_file_acc_name = "../data/raw/MetaMotion/A-bench-heavy_MetaWear_2019-01-14T14.22.49.165_C42732BE255C_Accelerometer_12.500Hz_1.4.4.csv"
-single_file_gyr_name = "../data/raw/MetaMotion/A-bench-heavy_MetaWear_2019-01-14T14.22.49.165_C42732BE255C_Gyroscope_25.000Hz_1.4.4.csv"
+single_file_acc_name = "../../data/raw/MetaMotion/A-bench-heavy_MetaWear_2019-01-14T14.22.49.165_C42732BE255C_Accelerometer_12.500Hz_1.4.4.csv"
+single_file_gyr_name = "../../data/raw/MetaMotion/A-bench-heavy_MetaWear_2019-01-14T14.22.49.165_C42732BE255C_Gyroscope_25.000Hz_1.4.4.csv"
 
 # Load the single accelerometer and gyroscope data files into DataFrames
 single_file_acc = pd.read_csv(single_file_acc_name)
 single_file_gyr = pd.read_csv(single_file_gyr_name)
 
 # List all CSV files in the specified directory
-files = glob("../data/raw/MetaMotion/*.csv")
+files = glob("../../data/raw/MetaMotion/*.csv")
 file_numbers = len(files)
 
 # Extract features from the filename of the first file
-data_file = "../data/raw/MetaMotion/"
+data_file = "../../data/raw/MetaMotion/"
 f = files[0]
 
 # Extract participant, label, and category from the filename
@@ -98,11 +98,11 @@ del gyr_df["elapsed (s)"]
 
 # Turn into function
 
-files = glob("../data/raw/MetaMotion/*.csv")
-data_file = "../data/raw/MetaMotion/"
+files = glob("../../data/raw/MetaMotion/*.csv")
+data_file = "../../data/raw/MetaMotion/"
 
 
-def reading_data_from_files(files):
+def test_reading_data_from_files(files):
     """
     Reads accelerometer and gyroscope data from a list of CSV files and processes them into two separate DataFrames.
 
@@ -173,7 +173,7 @@ def reading_data_from_files(files):
     return acc_df, gyr_df
 
 
-acc_df, gyr_df = reading_data_from_files(files)
+acc_df, gyr_df = test_reading_data_from_files(files)
 
 # Merging datasets
 
@@ -230,16 +230,16 @@ data_resampling["set"] = data_resampling["set"].astype("int")
 # data_resampling.info()
 
 # Export the processed dataset
-export_folder_path = "../data/processed/01_data_processed.pkl"
+export_folder_path = "../../data/processed/01_data_processed.pkl"
 data_resampling.to_pickle(export_folder_path)
 
 # A function for the full data_processing process.
 
-files = glob("../data/raw/MetaMotion/*.csv")
-data_file = "../data/raw/MetaMotion/"
+files = glob("../../data/raw/MetaMotion/*.csv")
+data_file = "../../data/raw/MetaMotion/"
 
 
-def data_processing(files):
+def test_data_processing(files):
     """
     Processes accelerometer and gyroscope data from a list of CSV files, merges them,
     resamples the merged data, and exports the processed data to a pickle file.
@@ -271,7 +271,7 @@ def data_processing(files):
     The exported DataFrame is saved to the path: "../data/processed/01_data_processed.pkl"
     """
 
-    acc_df, gyr_df = reading_data_from_files(files)
+    acc_df, gyr_df = test_reading_data_from_files(files)
 
     data_merged = pd.concat([acc_df.iloc[:, :3], gyr_df], axis=1)
     data_merged.columns = [
@@ -293,9 +293,9 @@ def data_processing(files):
     )
     data_resampling["set"] = data_resampling["set"].astype("int")
 
-    export_folder_path = "../data/processed/01_data_processed.pkl"
+    export_folder_path = "../../data/processed/01_data_processed.pkl"
     data_resampling.to_pickle(export_folder_path)
 
 
 # Testing the function (This function takes in file path and creates a processed data set).
-# data_processing(files)
+# test_data_processing(files)
