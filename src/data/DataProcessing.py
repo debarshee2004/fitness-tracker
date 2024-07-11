@@ -1,10 +1,10 @@
 import pandas as pd
 from glob import glob
 
-files = glob("../../data/raw/MetaMotion/*.csv")
+files_name = "../../data/raw/MetaMotion/*.csv"
+df_file = "../../data/processed/01_data_processed.pkl"
 
-
-def data_processing(files) -> None:
+def data_processing(files_name, df_file) -> None:
     """
     Processes accelerometer and gyroscope data from a list of CSV files, merges them,
     resamples the merged data, and exports the processed data to a pickle file.
@@ -35,6 +35,7 @@ def data_processing(files) -> None:
 
     The exported DataFrame is saved to the path: "../data/processed/01_data_processed.pkl"
     """
+    files = glob(files_name)
 
     acc_df = pd.DataFrame()
     gyr_df = pd.DataFrame()
@@ -111,9 +112,8 @@ def data_processing(files) -> None:
     )
     data_resampling["set"] = data_resampling["set"].astype("int")
 
-    export_folder_path = "../../data/processed/01_data_processed.pkl"
-    data_resampling.to_pickle(export_folder_path)
+    data_resampling.to_pickle(df_file)
 
 
 if __name__ == "__main__":
-    data_processing(files)
+    data_processing(files_name, df_file)

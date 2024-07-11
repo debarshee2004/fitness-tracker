@@ -75,8 +75,8 @@ def data_visualization(df_file) -> None:
 
                 ax[1].set_xlabel("samples")
 
-                # plt.savefig(f"../../report/figures/{label.title()}_({participant}).png")
-                plt.show()
+                plt.savefig(f"../../report/figures/{label.title()}_({participant}).png")
+                # plt.show()
 
 
 if __name__ == "__main__":
