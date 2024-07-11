@@ -5,7 +5,7 @@ import matplotlib as mpl
 df_file = "../../data/processed/01_data_processed.pkl"
 
 
-def data_visualization(df_file):
+def data_visualization(df_file) -> None:
     """
     Visualize accelerometer and gyroscope data from a processed DataFrame stored in a pickle file.
 
@@ -77,3 +77,7 @@ def data_visualization(df_file):
 
                 # plt.savefig(f"../../report/figures/{label.title()}_({participant}).png")
                 plt.show()
+
+
+if __name__ == "__main__":
+    data_visualization(df_file)

@@ -4,7 +4,7 @@ from glob import glob
 files = glob("../../data/raw/MetaMotion/*.csv")
 
 
-def data_processing(files):
+def data_processing(files) -> None:
     """
     Processes accelerometer and gyroscope data from a list of CSV files, merges them,
     resamples the merged data, and exports the processed data to a pickle file.
@@ -115,4 +115,5 @@ def data_processing(files):
     data_resampling.to_pickle(export_folder_path)
 
 
-data_processing(files)
+if __name__ == "__main__":
+    data_processing(files)
