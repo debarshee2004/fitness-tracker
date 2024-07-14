@@ -4,6 +4,7 @@ from glob import glob
 files_name = "../../data/raw/MetaMotion/*.csv"
 df_file = "../../data/processed/01_data_processed.pkl"
 
+
 def data_processing(files_name, df_file) -> None:
     """
     Processes accelerometer and gyroscope data from a list of CSV files, merges them,
