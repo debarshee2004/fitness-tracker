@@ -283,4 +283,4 @@ outlier_removed_df.info()
 
 # Export new dataframe
 
-outlier_removed_df.to_pickle("../../data/final/02_outliers_removed_chauvenets.pkl")
+outlier_removed_df.to_pickle("../../data/processed/02_outliers_removed_chauvenets.pkl")
