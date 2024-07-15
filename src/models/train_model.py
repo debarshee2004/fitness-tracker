@@ -1,11 +1,14 @@
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
-from LearningAlgorithms import ClassificationAlgorithms
 import seaborn as sns
 import itertools
+import pickle
+from LearningAlgorithms import ClassificationAlgorithms
+from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import GridSearchCV
 
 
 # Plot settings
@@ -219,6 +222,32 @@ plt.show()
 ) = learner.random_forest(
     X_train[feature_set_4], y_train, X_test[feature_set_4], gridsearch=True
 )
+
+
+def save_model(X_train, y_train):
+    tuned_parameters = [
+        {
+            "min_samples_leaf": [2, 10, 50, 100, 200],
+            "n_estimators": [10, 50, 100],
+            "criterion": ["gini", "entropy"],
+        }
+    ]
+    rf_model = GridSearchCV(
+        RandomForestClassifier(), tuned_parameters, cv=5, scoring="accuracy"
+    )
+    rf_model.fit(X_train, y_train.values.ravel())
+    pkl_filename = "../../models/pickle_model.pkl"
+    with open(pkl_filename, "wb") as file:
+        pickle.dump(rf_model, file)
+
+    # Load from file
+    with open(pkl_filename, "rb") as file:
+        pickle_model = pickle.load(file)
+
+    return pickle_model
+
+
+pickle_model = save_model(X_train=X_train, y_train=y_train)
 
 accuracy = accuracy_score(y_test, class_test_y)
 
