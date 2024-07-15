@@ -8,9 +8,9 @@ The dataset consists of multiple CSV files of Accelerometer and Gyroscope data o
 
 ## Process
 
-#### Step 01:
+#### Step 01: Extracting the information from the file names and adding them to the data frame.
 
-Extracting the information from the file names and adding them to the data frame. We will first test on one file and then when the process is working correctly we will run a loop over all the files and convert them.
+We will first test on one file and then when the process is working correctly we will run a loop over all the files and convert them.
 
 ```py
 # Read single CSV files for accelerometer and gyroscope data
@@ -484,9 +484,9 @@ gyr_df.head()
 </table>
 </div>
 
-#### Step 02:
+#### Step 02: Handling the time for the dataset and the time interval.
 
-Handling the time for the dataset and the time interval. We are provided with time in Epochs UTC time and CET winter time, this can cause some disturbance and ineqalitizes for out dataset. So it is a good practice to convert it into a standard using Epoch (computing) timezone.
+We are provided with time in Epochs UTC time and CET winter time, this can cause some disturbance and ineqalitizes for out dataset. So it is a good practice to convert it into a standard using Epoch (computing) timezone.
 
 > **In computing, an epoch is a fixed date and time used as a reference from which a computer measures system time. Most computer systems determine time as a number representing the seconds removed from a particular arbitrary date and time. For instance, Unix and POSIX measure time as the number of seconds that have passed since Thursday 1 January 1970 00:00:00 UT, a point in time known as the Unix epoch. Windows NT systems, up to and including Windows 11 and Windows Server 2022, measure time as the number of 100-nanosecond intervals that have passed since 1 January 1601 00:00:00 UTC, making that point in time the epoch for those systems. Computing epochs are almost always specified as midnight Universal Time on some particular date.**
 
@@ -678,7 +678,7 @@ gyr_df.head()
 </table>
 </div>
 
-#### Step 03:
+#### Step 03: Functionalization
 
 Converting the above steps in to a function and running it for all the files of the raw data. This will help us incase of reusablity and also simplify the process.
 
@@ -727,7 +727,7 @@ def reading_data_from_files(files):
     return acc_df, gyr_df
 ```
 
-#### Step 04:
+#### Step 04: Merging the Two DataFrame
 
 Now that we have extracted the features and updated the time index of the Accelerometer and Gyroscope dataframe, it's time to merge the two into one dataframe. Here we experience a problem, the frequency at which the data is taken is different in the case of Accelerometer and Gyroscope.
 
@@ -988,9 +988,7 @@ data_resampling = pd.concat(
 </table>
 </div>
 
-#### Step 05:
-
-Save the processed data in a pickle file.
+#### Step 05: Save the processed data in a pickle file.
 
 > **What is a Pickle file?**
 
